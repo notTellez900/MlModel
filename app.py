@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from joblib import load
 import pandas as pd
 import random
+import os
 
 app=Flask(__name__)
 
@@ -38,9 +39,8 @@ def predict():
 
     result = modelo.predict(df_transformed)
 
-    result2 = random.choice([0, 1])
-
-    return jsonify({'prediction': result2})
+    return jsonify({'prediction': result})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port= port)
